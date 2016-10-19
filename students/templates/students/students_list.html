@@ -1,163 +1,62 @@
+{% extends "students/base.html" %}
+
 {% load static from staticfiles %}
 
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-  <meta charset="UTF-8"/>
-  <title>СТУДЕНТИ</title>
-  <meta name="description" 
-   content="Система обліку студентів навчального закладу">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block meta_title %}Сервіс обліку студентів - Список студентів{% endblock meta_title %}
 
-  <!-- Include Styles -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static "css/main.css" %}">
-</head> 
+{% block title %}Список студентів{% endblock title %}
 
-<body>
-
-<div class="container">
-
-  <!-- Start Header -->
-  <div class="row" id="header">
-    <!-- Logo -->
-    <div class="col-xs-12">
-      <div align="center">
-        <div id="centerLayer">
-          <h2>СЕРВІС ОБЛІКУ СТУДЕНТІВ</h2>
+{% block content %}
+<a href="{% url "students_add" %}" class="btn btn-primary">Додати студента</a>
+<!-- Start Students Listing -->
+{% if students %}
+<table class="table">
+  <thead>
+    <tr>
+      <th><a href="#">#</a></th>
+      <th>Фото</th>
+      <th><a href="#">Прізвище &uarr;</a></th>
+      <th><a href="#">Ім'я</a></th>
+      <th><a href="#">№ білету</a></th>
+      <th>Дії</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td><img class="img-circle" src="{% static student.image %}" height="30" width="30"></td>
+      <td><a href="{% url "students_edit" student.id %}">{{ student.last_name }}</a></td>
+      <td><a href="{% url "students_edit" student.id %}">{{ student.first_name }}</a></td>
+      <td>{{ student.ticket }}</td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle"
+            data-toggle="dropdown">Дія
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{% url "students_edit" student.id %}">Редагувати</a></li>
+            <li><a href="/journals">Відвідування</a></li>
+            <li><a href="{% url "students_delete" student.id %}">Видалити</a></li>
+          </ul>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- End Header -->
-  
-  <!-- Start SubHeader -->
-  <div class="row" id="sub-header">
-    <div class="col-xs-1"></div>
-    <div class="col-xs-2">
-      <a class="btn btn-success btn-lg" href="groups.html" role="button">Групи</a>
-    </div>
-    <div class="col-xs-2"></div>
-    <div class="col-xs-2">
-      <a class="btn btn-success btn-lg" href="students.html" role="button">Студенти</a>
-    </div>
-    <div class="col-xs-2"></div>
-    <div class="col-xs-2">
-      <a class="btn btn-success btn-lg" href="visiting.html" role="button">Відвідування</a>
-    </div>
-    <div class="col-xs-1"></div>        
-  </div>
-  <!-- End SubHeader -->
-
-  <!-- Start ChoiceMenu -->
-  <div class="row" id="choice-menu">
-    <div class="col-xs-1"></div>
-    <div class="col-xs-1">Група:</div>
-    <div class="col-xs-1">
-      <!-- Groups Selector -->
-      <div>
-        <select>
-          <option value="">Усі студенти</option>
-          <option value="">МтМ - 21, Ячменев Олег</option>
-          <option value="">МтМ - 22, Подоба Віталій</option>
-          <option value="">МтМ - 23, Іванов Андрій</option>
-        </select>
-      </div>  
-    </div>
-    <div class="col-xs-2"></div>
-    <div class="col-xs-2">
-      <!-- Add Student Button -->
-      <a class="btn btn-primary" href="#">Додати студента</a>
-    </div>
-    <div class="col-xs-5"></div>
-  </div>
-  <!-- End ChoiceMenu -->
-
-  <!-- Start Main Page Content -->
-  <div class="row" id="content-columns">
-    <div class="col-xs-12">
-
-    <div>
-        <!-- Start Students Listing -->
-        <table class="table">
-          <thead>
-            <tr>
-              <th><a href="#">#</a></th>
-              <th>Фото</th>
-              <th><a href="#">Прізвище &uarr;</a></th>
-              <th><a href="#">Ім'я</a></th>
-              <th><a href="#">№ Білету</a></th>
-              <th>Дії</th>
-            </tr>
-          </thead>
-          <tbody>
-		    {% for student in students %}
-            <tr>
-              <td>{{ forloop.counter }}</td>
-              <td><img class="img-circle" src="{% static student.image %}" height="30" width="30"></td>
-              <td><a href="{% url "students_edit" student.id %}">{{ student.last_name }}</a></td>
-              <td><a href="{% url "students_edit" student.id %}">{{ student.first_name }}</a></td>
-              <td><a href="#">Олег</a></td>
-              <td>{{ student.ticket }}</td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle"
-                    data-toggle="dropdown">Дія
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><span class="label label-important"><a href="{% url "students_edit" student.id %}">Редагувати</a></span></li>
-                    <li><span class="label label-important"><a href="/journal/{{ student.id }}">Відвідування</a></span></li>
-                    <li><span class="label label-important"><a href="{% url "students_delete" student.id %}">Видалити</a></span></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-			{% endfor %}
-
-          </tbody>
-      </table>
-      <!-- End Groups Listing -->
-
-      <nav>
-        <ul class="pagination">
-          <li><a href="#">&laquo;</a></li>
-          <li class="active"><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li><a href="#">&raquo;</a></li>
-        </ul>
-      </nav>
-    </div>
-    </div>
-  </div>
-  <!-- End Main Page Content -->
-
-  <!-- Status Message -->
-  <div class="row" id="status-message">
-    <div class="col-xs-12">
-      <div class="alert alert-warning" role="alert">Запис здійснено успішно.</div>
-    </div>
-  </div>
-  <!-- End Message -->
-
-  <!-- Start Footer -->
-  <div class="row" id="footer">
-    <div class="col-xs-12">
-      <hr>
-      &copy; 2016 Сервіс обліку студентів
-    </div>
-  </div>
-  <!-- End Footer -->
-
-</div>
-<!-- End Container -->
-
-  <!-- Javascripts Section -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</body>
-</html>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<!-- End Students Listing -->
+{% endif %}
+<nav>
+  <ul class="pagination">
+    <li><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+  </ul>
+</nav>
+{% endblock content %}

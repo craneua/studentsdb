@@ -1,10 +1,4 @@
 /* Global Styles */
-html,
-body {
-    margin: 10;
-    padding: 10;
-}
-
 .alert {
   margin: 10px 0 5px 0;
 }
@@ -12,39 +6,12 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
 }
 
-/* Header */
-#header {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 15px; /* Поля */
-    background: #fcf8e3; /* Цвет фона */
-    border: 1px solid #E81E25; /* Параметры рамки */
-}
-
-/* SubHeader */
-#sub-header {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 15px; /* Поля */
-    background: #fcf8e3; /* Цвет фона */
-    border: 1px solid #E81E25; /* Параметры рамки */
-}
-
-/* ChoiceMenu */
-#choice-menu {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 15px; /* Поля */
-    background: #fcf8e3; /* Цвет фона */
-    border: 1px solid #E81E25; /* Параметры рамки */
-}
-
 /* Groups Selector */
 #group-selector {
   margin-top: 30px;
 }
 #group-selector select {
-  width: 60%;
+  width: 80%;
   margin: 0;
   background-color: #ffffff;
   border: 1px solid #cccccc;
@@ -55,6 +22,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Footer Styles */
 #footer {
-  width: 100%;
-  color: #333;
+  border-top: 1px solid #dddddd;
+  padding-top: 10px;
 }
